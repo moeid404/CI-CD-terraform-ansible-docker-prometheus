@@ -1,0 +1,107 @@
+# Install Jenkins
+- name: Update apt repository
+  apt:
+    update_cache: yes
+    
+- name: Ensure required packages for jenkins-master
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - fontconfig
+    - openjdk-17-jre
+    - rsync
+    - procps
+    - vim
+    - ntp
+
+- name: Add Jenkins GPG key
+  get_url:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+    dest: /usr/share/keyrings/jenkins-keyring.asc
+    mode: '0644'
+
+- name: Add Jenkins repository
+  lineinfile:
+    path: /etc/apt/sources.list.d/jenkins.list
+    line: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/"
+    create: yes
+
+- name: Update apt repository again
+  apt:
+    update_cache: yes
+
+- name: Install Jenkins
+  apt:
+    name: jenkins
+    state: present
+
+- name: Start Jenkins service
+  service:
+    name: jenkins
+    state: started
+    enabled: yes
+
+- name: Get Jenkins initial admin password
+  command: cat /var/lib/jenkins/secrets/initialAdminPassword
+  register: jenkins_admin_password
+
+- name: Print Jenkins initial admin password
+  debug:
+    msg: "Jenkins initial admin password: {{ jenkins_admin_password.stdout }}"
+
+# Install Ansible
+- name: Update apt package index
+  apt:
+    update_cache: yes
+
+- name: Install software-properties-common
+  apt:
+    name: software-properties-common
+    state: present
+
+- name: Add Ansible PPA
+  apt_repository:
+    repo: ppa:ansible/ansible
+    update_cache: yes
+
+- name: Install Ansible
+  apt:
+    name: ansible
+    state: present
+
+# install terraform
+
+- name: Update apt repository cache
+  apt:
+    update_cache: yes
+
+- name: Install gnupg and software-properties-common
+  apt:
+    name:
+      - gnupg
+      - software-properties-common
+    state: present
+
+- name: Download HashiCorp GPG key and save it as a keyring
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+    keyring: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+- name: Verify the HashiCorp GPG key fingerprint
+  command: gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
+
+- name: Add HashiCorp repository
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_lsb.codename }} main"
+    state: present
+
+- name: Update apt repository cache after adding HashiCorp repo
+  apt:
+    update_cache: yes
+
+- name: Install Terraform
+  apt:
+    name: terraform
+    state: present

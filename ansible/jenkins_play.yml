@@ -1,0 +1,11 @@
+- hosts: jenkins_master
+  vars_files:
+    - ./vars.yml
+  gather_facts: yes
+  become: yes
+  roles: 
+    - 1.jenkins-master/1.provisioning
+    - 1.jenkins-master/2.remote_user
+    - 1.jenkins-master/3.ssh_conf
+    - 1.jenkins-master/4.master_provisioning_for_prometheus
+    - 1.jenkins-master/5.iptables

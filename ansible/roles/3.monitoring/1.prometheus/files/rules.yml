@@ -1,0 +1,20 @@
+groups:
+- name: container_alerts
+  rules:
+  - alert: NginxContainerDown
+    expr: absent(container_last_seen{name="nginx_container"}) > 0
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Nginx Container is down"
+      description: "Nginx Container has been down for more than 5 seconds."
+
+  - alert: PhpFpmContainerDown
+    expr: absent(container_last_seen{name="php_fpm_container"}) > 0
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: "PHP-FPM Container is down"
+      description: "PHP-FPM Container has been down for more than 5 seconds."

@@ -1,0 +1,15 @@
+- hosts: agent
+  vars_files:
+    - ./secret-vars-vault.yml
+    - ./vars.yml
+  gather_facts: yes
+  become: yes
+  roles:
+    - 2.agent/1.provisioning
+    - 2.agent/2.ssh_conf
+    - 2.agent/3.mariadb
+    - 2.agent/4.wordpress
+    - 2.agent/5.docker-install
+    - 2.agent/6.docker-containers
+    - 2.agent/7.agent_provisioning_for_prometheus
+    - 2.agent/8.iptables

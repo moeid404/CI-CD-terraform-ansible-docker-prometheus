@@ -1,0 +1,33 @@
+agent: 3.83.29.131
+wp_db_host: 172.31.82.130
+prometheus_server: 3.80.209.190
+
+jenkins_master: 54.210.1.176
+############################
+user_name_jankins: "{{ lookup('pipe', 'whoami') }}" # new user for you to enter jenkins server and close root login for security reasons
+grafana_port: 3000
+grafana_protocol: http
+teammate: bahy                                 # Who work with you on the jenkins server if needed unhash it's section in remote_user role.
+port: 22                                       # Where ansible enter the jenkins server from.
+# For mariadb and wordpress roles
+wp_db_name: wp
+wp_db_user: wpuser                             # It's password and root password in secrets.
+app_name: wordpress
+# For docker-containers
+## Main
+docker_compose_path: /srv/docker/docker-compose.yml
+dockerfile_path: /srv/docker/Dockerfile
+## Nginx Configuration
+wordpress_root: /var/www/html/wordpress
+## docker-compose Configuration
+### Nginx Container
+nginx_image: nginx
+nginx_container_name: nginx_container
+nginx_conf_path: /etc/nginx/conf.d/nginx.conf
+wordpress_path: /var/www/html/wordpress
+### php-fpm Container
+php_fpm_image: php_fpm_custom_image
+php_fpm_container_name: php_fpm_container
+php_fpm_conf_path: /usr/local/etc/php-fpm.d/www.conf
+### Networks
+app_network: app

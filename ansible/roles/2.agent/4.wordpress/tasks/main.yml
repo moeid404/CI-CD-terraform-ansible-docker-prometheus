@@ -1,0 +1,27 @@
+- name: Create mounted Nginx directory
+  file:
+    path: /var/www/html/
+    state: directory
+    mode: '0755'  # Ensure the permissions are set for the parent directory
+
+- name: Copy WordPress directory to remote server using rsync
+  synchronize:
+    src: "files/wordpress/"
+    dest: "/var/www/html/wordpress/"
+    rsync_opts:
+      - "--chmod=755"
+      - "--chown=www-data:www-data"
+
+- name: Set permissions for files
+  command: >
+    sudo find /var/www/html/{{ app_name }} -type f -exec chmod 644 {} \;
+
+- name: Delete wp-config-sample.php
+  ansible.builtin.file:
+    path: /var/www/html/wordpress/wp-config-sample.php
+    state: absent
+
+- name: Copy wp-config.php
+  template:
+    src: "wp-config.php.j2"
+    dest: "/var/www/html/wordpress/wp-config.php"
