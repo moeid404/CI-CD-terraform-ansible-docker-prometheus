@@ -1,43 +1,26 @@
-# SSH Configuration Role
+# Prometheus Installation and Configuration Role
 
-This role is designed to configure the SSH server (`sshd`) on a remote machine to enhance security by changing the default settings.
+This role installs Prometheus, configures its settings, and ensures the service is running.
 
 ## Tasks Overview
 
-1. **Change SSH Port:**
-   - This task modifies the SSH configuration to change the default SSH port from 22 to a custom port specified by the `port` variable. Changing the SSH port helps reduce the risk of automated attacks on the default port.
+### 1. Copy Prometheus Installation Script
+- Copies the `install_prometheus.sh` script to the server at `/tmp/install_prometheus.sh` and makes it executable.
 
-2. **Disable Root Login:**
-   - This task configures SSH to disallow direct root login by setting `PermitRootLogin` to `no`. Disabling root login enhances security by requiring users to log in with a non-root account and then elevate privileges.
+### 2. Run Prometheus Installation Script
+- Executes the Prometheus installation script to set up Prometheus on the server.
 
-3. **Enable Public Key Authentication:**
-   - This task ensures that SSH is configured to use public key authentication by setting `PubkeyAuthentication` to `yes`. Public key authentication is more secure than password-based authentication.
+### 3. Copy Prometheus Configuration Template
+- Copies the `prometheus.yml.j2` template to `/etc/prometheus/prometheus.yml` with appropriate ownership and permissions.
 
-4. **Disable Password Authentication:**
-   - This task disables password authentication for SSH, requiring all users to use SSH key pairs instead. This further enhances security by preventing brute-force password attacks.
+### 4. Copy Alerting Rules Configuration
+- Copies the `rules.yml` file to `/etc/prometheus/rules.yml` with the correct permissions.
 
-5. **Restart SSHD** 
-   - Restarts the SSH service to apply the changes made to the `sshd_config` file.
-
-
-## Variables
-
-- `port`: The port used by Ansible to connect to the remote server. Default is `22`. This variable allows you to specify a different port if you have customized SSH settings on your server.
+### 5. Restart Prometheus Service
+- Restarts the Prometheus service to apply the new configuration and ensures it is enabled to start on boot.
 
 ## Usage
 
-Include this role in your playbook to configure the SSH server:
-
-**Example Playbook:**
-
-```yaml
-- hosts: all
-  roles:
-    - ssh_configuration
-```
-
-
-## Author Information
-
-This role was created in 2024 by **Mohamed Eid**.
-
+1. Ensure the `install_prometheus.sh`, `prometheus.yml.j2`, and `rules.yml` files are available in the specified locations.
+2. Include this role in your playbook.
+3. Run the playbook with the appropriate command to set up Prometheus.
