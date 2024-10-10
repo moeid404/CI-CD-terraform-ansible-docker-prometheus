@@ -3,7 +3,7 @@
 ## Overview
 This project implements a comprehensive CI/CD pipeline that automates the deployment of a WordPress application with monitoring capabilities. The pipeline utilizes various DevOps tools including Jenkins, Terraform, Ansible, Docker, and Prometheus.
 
-![Project Logo](project-diagram.png)
+![Project Logo](project_photos/project-diagram.png)
 
 ## Features
 - **Infrastructure as Code** using Terraform
@@ -36,32 +36,6 @@ This project implements a comprehensive CI/CD pipeline that automates the deploy
 - Local machine with:
   - Git
   - Ansible
-
-## Installation & Setup
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/moeid404/CI-CD-terraform-ansible-docker-prometheus.git
-cd CI-CD-terraform-ansible-docker-prometheus
-```
-
-### 2. Jenkins Master Setup
-```bash
-cd ansible
-# Update ssh_key.pem with yours.
-# Update Jenkins Master IP in hosts.ini and vars.yml
-ansible-playbook -i hosts.ini jenkins_play.yml
-```
-
-### 3. Jenkins Configuration
-1. Access Jenkins UI: `http://<jenkins-master-ip>:8080`
-2. Configure credentials:
-   - SSH Key: As SSH user and private key credentials.
-   - AWS Access Key ID: As Secret Text
-   - AWS Secret Access Key: As Secret Text
-3. Create pipeline job:
-   - Configure GitHub webhook
-   - Use Pipeline script from SCM
 
 ## Components
 
@@ -99,6 +73,32 @@ ansible-playbook -i hosts.ini jenkins_play.yml
   - PHP-FPM container
 - Slack notifications for alerts if the containers down as an example.
 
+## Installation & Setup
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/moeid404/CI-CD-terraform-ansible-docker-prometheus.git
+cd CI-CD-terraform-ansible-docker-prometheus
+```
+
+### 2. Jenkins Master Setup
+```bash
+cd ansible
+# Update ssh_key.pem with yours.
+# Update Jenkins Master IP in hosts.ini and vars.yml
+ansible-playbook -i hosts.ini jenkins_play.yml
+```
+
+### 3. Jenkins Configuration
+1. Access Jenkins UI: `http://<jenkins-master-ip>:8080`
+2. Configure credentials:
+   - SSH Key: As SSH user and private key credentials.
+   - AWS Access Key ID: As Secret Text
+   - AWS Secret Access Key: As Secret Text
+3. Create pipeline job:
+   - Configure GitHub webhook
+   - Use Pipeline script from SCM
+
 ## Usage
 1. Ensure all prerequisites are met
 2. Follow the Installation & Setup steps
@@ -107,6 +107,37 @@ ansible-playbook -i hosts.ini jenkins_play.yml
    - Provision infrastructure
    - Deploy application
    - Configure monitoring
+
+## Project Screenshots
+
+1. **Work Directory Structure**
+   ![Work Directory Structure](project_photos/work_directory_structure.png)
+   *Overview of the project directory structure.*
+
+2. **First Build**
+   ![First Build](project_photos/first_build.png)
+   *The initial build process in Jenkins.*
+
+3. **Targets**
+   ![Targets](project_photos/targets.png)
+   *Target settings for the CI/CD pipeline.*
+
+4. **Testing Down Nginx Container and Restart It**
+   ![Testing Nginx](project_photos/testing_nginx.png)
+   *Testing the Nginx container and restarting it.*
+
+5. **Testing Down PHP-FPM Container and Restart It**
+   ![Testing PHP-FPM](project_photos/testing_php_fpm.png)
+   *Testing the PHP-FPM container and restarting it.*
+
+6. **Grafana Dashboard for the 3 Servers**
+   ![Grafana Dashboard](project_photos/grafana_dashboard.png)
+   *The Grafana dashboard displaying metrics for the three servers.*
+
+7. **Second Build**
+   ![Second Build](project_photos/second_build.png)
+   *The second build process showing that changes were applied within approximately 2 minutes after a developer commit.*
+
 
 ## Author
 - **Mohamed Eid** - [GitHub Profile](https://github.com/moeid404)  
