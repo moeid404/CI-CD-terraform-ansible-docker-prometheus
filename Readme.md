@@ -110,31 +110,22 @@ ansible-playbook -i hosts.ini jenkins_play.yml
 
 ## Project Screenshots
 
-1. **Work Directory Structure**
-   ![Work Directory Structure](project_photos/work_directory_structure.png)
-   *Overview of the project directory structure.*
-
-2. **First Build**
+1. **First Build**
    ![First Build](project_photos/first_build.png)
-   *The initial build process in Jenkins.*
-
-3. **Targets**
+---
+2. **Targets**
    ![Targets](project_photos/targets.png)
-   *Target settings for the CI/CD pipeline.*
-
-4. **Testing Down Nginx Container and Restart It**
+---
+3. **Testing Down Nginx Container and Restart It**
    ![Testing Nginx](project_photos/testing_nginx.png)
-   *Testing the Nginx container and restarting it.*
-
-5. **Testing Down PHP-FPM Container and Restart It**
+---
+4. **Testing Down PHP-FPM Container and Restart It**
    ![Testing PHP-FPM](project_photos/testing_php_fpm.png)
-   *Testing the PHP-FPM container and restarting it.*
-
-6. **Grafana Dashboard for the 3 Servers**
+---
+5. **Grafana Dashboard for the 3 Servers**
    ![Grafana Dashboard](project_photos/grafana_dashboard.png)
-   *The Grafana dashboard displaying metrics for the three servers.*
-
-7. **Second Build**
+---
+6. **Second Build**
    ![Second Build](project_photos/second_build.png)
    *The second build process showing that changes were applied within approximately 2 minutes after a developer commit.*
 
